@@ -24,18 +24,14 @@ function ParentComp() {
     const {
         register,
         handleSubmit, 
-        formState: { errors, isValid,  },
+        formState: {  isValid,  },
       } = useForm({mode:"all"})
   
       const handleChange = (event) => {
         const selectedImage = event.target.files[0];
         setImage(URL.createObjectURL(selectedImage));
       };
-      console.log(errors)
-      console.log("valid",isValid)
-      console.log("image",image)
       const onSubmit = (data) => {
-        console.log(data);
         navigate("/")
       }
     const nextFormStep = ()=>{

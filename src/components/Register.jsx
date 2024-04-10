@@ -1,5 +1,6 @@
 import {useNavigate} from "react-router-dom"
-import logo from "../assets/logo.png"
+import logo from "../assets/logo.png";
+import heroImg from "../assets/heroImg.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import {useForm} from "react-hook-form"
@@ -10,11 +11,12 @@ function Register() {
       formState: { errors },
     } = useForm()
     const navigate = useNavigate();
-    console.log(errors)
+    // console.log(errors)
     const onSubmit = (data) => {
-      console.log(data);
-      localStorage.setItem('userData', JSON.stringify(data));
-      navigate('/get-started')
+      const {name, username} = data
+      localStorage.setItem('userData', JSON.stringify({username, name}));
+      navigate('/get-started');
+
     }
   return (
     <div>
@@ -25,7 +27,7 @@ function Register() {
             <div >Discover the world&apos;s top </div>
             <div >Designers & Creatives. </div>
           </div>
-          <img src="https://cdn.dribbble.com/users/76454/screenshots/6592185/001_4x.png"  className="" alt="" />
+          <img src={heroImg}  className="" alt="hero Image" />
         </div>
         <div className="w-full  p-8">
             <div className="text-right mb-6 text-xs font-semibold">Already a member?<a className="text-blue-600 hover:underline dark:text-blue-800"> Sign In</a></div>
@@ -39,12 +41,11 @@ function Register() {
                 {errors.email && <div>• {errors.email.message}</div>}
                 {errors.tnc && <div>• {errors.tnc.message}</div>}
               </div>
-              {/* <div className="invisible text-red-600 mb-6 text-sm  ">• Username has already been taken</div> */}
-               <form onSubmit={handleSubmit(onSubmit)}>
+              <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="grid gap-6 mb-6 md:grid-cols-2 text-sm">
                       <div>
                           <label htmlFor="name" className="block mb-2 text-sm font-bold"><FontAwesomeIcon icon={faTriangleExclamation} className={`text-red-600 px-1 ${!errors.name &&"hidden"}`}/>Name</label>
-                          <input type="text" name="name" {...register("name",{required:"Name is required."})} className={`bg-gray-200 focus:outline-none border-none block w-full p-2.5 rounded-lg text-sm ${errors.username &&"bg-red-100"}`} placeholder="John"   />
+                          <input type="text" name="name" {...register("name",{required:"Name is required."})} className={`bg-gray-200 focus:outline-none border-none block w-full p-2.5 rounded-lg text-sm ${errors.name &&"bg-red-100"}`} placeholder="John"   />
                           {/* <input type="text" id="name" name="name" value={formValues.name} onChange={onChange} className="bg-gray-200 focus:outline-none border-none block w-full p-2.5 rounded-lg text-sm" placeholder="John" required /> */}
                       </div>
                       <div>
@@ -55,18 +56,18 @@ function Register() {
                   </div>
                       <div className="mb-6">
                           <label htmlFor="email" className="block mb-2 text-sm font-bold"><FontAwesomeIcon icon={faTriangleExclamation} className={`text-red-600 px-1 ${!errors.email &&"hidden"}`}/>Email</label>
-                          <input type="email" name="email" {...register("email", {
-                    required: "Email is required.",
-                    pattern: {
-                      value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
-                      message: "Please enter a valid email address",
-                    },
+                          <input type="text" name="email" {...register("email", {
+                            required: "Email is required.",
+                            pattern: {
+                              value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
+                              message: "Please enter a valid email address",
+                            },
                   })} className={`bg-gray-200 focus:outline-none border-none block w-full p-2.5 rounded-lg text-sm
                   ${errors.email &&"bg-red-100"}`} placeholder="sample@email.com"   />
                       </div> 
                       <div className="mb-6">
                         <label htmlFor="password" className="block mb-2 text-sm font-bold"><FontAwesomeIcon icon={faTriangleExclamation} className={`text-red-600 px-1 ${!errors.password &&"hidden"}`}/>Password</label>
-                          <input type="password" name="password" {...register("password",{required:"Password is required.",// minLength: {value: 6,message: "Password must be of 6+ characters"}
+                          <input type="password" name="password" {...register("password",{required:"Password is required.", minLength: {value: 6,message: "Password must be of 6+ characters"}
             })} className={`bg-gray-200 focus:outline-none border-none block w-full p-2.5 rounded-lg text-sm ${errors.password &&"bg-red-100"}`} placeholder="6+ characters"  />
                       </div> 
                       <div className="flex items-start mb-6">

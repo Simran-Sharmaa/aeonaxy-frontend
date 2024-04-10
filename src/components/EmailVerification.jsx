@@ -28,6 +28,7 @@ function EmailVerification() {
 
     </div>
   </div>
+  {/* <img src="https://media.tenor.com/bm8Q6yAlsPsAAAAj/verified.gif" alt="" /> */}
   <Footer/>
     </>
   )
